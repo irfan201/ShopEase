@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/iv_checkout"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/example_product"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_name_checkout"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toStartOf="@id/tv_quantity"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Nama Product"
+            android:layout_marginEnd="12dp"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/iv_checkout"
+            app:layout_constraintTop_toTopOf="@id/iv_checkout" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_name_checkout"
+            android:id="@+id/tv_quantity"
+            tools:text="x2"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_name_checkout"
+            android:textColor="@color/text_primary"/>
+
+
+        <TextView
+            android:id="@+id/tv_category_checkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Nama Category"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/tv_name_checkout"
+            app:layout_constraintTop_toBottomOf="@id/tv_name_checkout" />
+
+        <TextView
+            android:id="@+id/tv_price_checkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="32 $"
+            android:textColor="@color/text_price_regular"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tv_name_checkout"
+            app:layout_constraintTop_toBottomOf="@id/tv_category_checkout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

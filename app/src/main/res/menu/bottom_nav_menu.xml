@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="@string/home"
+        android:id="@+id/btn_home"
+        android:icon="@drawable/icon_home"/>
+
+    <item
+        android:title="@string/category"
+        android:id="@+id/btn_category"
+        android:icon="@drawable/icon_category"/>
+
+    <item
+        android:title="@string/favorite"
+        android:id="@+id/btn_favorite"
+        android:icon="@drawable/icon_favorite"/>
+
+
+    <item
+        android:title="@string/order"
+        android:id="@+id/btn_order"
+        android:icon="@drawable/icon_order"/>
+
+    <item
+        android:title="@string/profile"
+        android:id="@+id/btn_profile"
+        android:icon="@drawable/icon_profile"/>
+
+
+<!--    <item-->
+<!--        android:title=""-->
+<!--        android:enabled="false"/>-->
+
+
+</menu>
