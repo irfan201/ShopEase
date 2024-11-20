@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shopease.databinding.ItemOrderBinding
 import com.example.shopease.domain.model.OrderHistory
-import java.text.NumberFormat
+import com.example.shopease.utils.ShopHelper.formatPrice
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -26,10 +26,7 @@ class OrderAdapter(private val listOrder: List<OrderHistory>, private val listen
         holder.binding.apply {
             tvNameOrder.text = order.orId
             tvStatusOrder.text = order.statusPayment
-            val formatedPrice = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
-            formatedPrice.maximumFractionDigits = 0
-            val formatRupiah = formatedPrice.format(order.totalPrice)
-            tvPriceOrder.text = formatRupiah
+            tvPriceOrder.text = formatPrice(order.totalPrice)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val parsedDate = java.time.ZonedDateTime.parse(order.dateOrder)
                 val dateFormat =

@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.shopease.databinding.ItemOrderDetailBinding
 import com.example.shopease.domain.model.OrderHistory
-import java.text.NumberFormat
-import java.util.Locale
+import com.example.shopease.utils.ShopHelper.formatPrice
 
 class OrderDetailAdapter(private val listOrder: List<OrderHistory.OrderDetail>) :
     RecyclerView.Adapter<OrderDetailAdapter.MyViewHolder>() {
@@ -26,10 +25,7 @@ class OrderDetailAdapter(private val listOrder: List<OrderHistory.OrderDetail>) 
         val order = listOrder[position]
         holder.binding.apply {
             tvNameOrderDetail.text = order.name
-            val formatedPrice = NumberFormat.getCurrencyInstance(Locale("id","ID"))
-            formatedPrice.maximumFractionDigits = 0
-            val formatRupiah = formatedPrice.format(order.price)
-            tvPriceOrderDetail.text = formatRupiah
+            tvPriceOrderDetail.text = formatPrice(order.price)
             tvTotalOrder.text = order.quantity.toString()
             Glide.with(holder.itemView.context)
                 .load(order.imageUrl)

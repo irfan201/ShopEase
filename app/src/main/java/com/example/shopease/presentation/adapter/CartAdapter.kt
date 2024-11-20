@@ -7,8 +7,7 @@ import com.bumptech.glide.Glide
 import com.example.shopease.data.model.ProductCartEntity
 import com.example.shopease.databinding.ItemCartBinding
 import com.example.shopease.domain.model.Product
-import java.text.NumberFormat
-import java.util.Locale
+import com.example.shopease.utils.ShopHelper.formatPrice
 
 class CartAdapter(private val listProduct: List<Product>,private val listener: CartListener):RecyclerView.Adapter<CartAdapter.MyViewHolder>() {
     class MyViewHolder(val binding: ItemCartBinding) : RecyclerView.ViewHolder(binding.root)
@@ -25,11 +24,7 @@ class CartAdapter(private val listProduct: List<Product>,private val listener: C
         var quantity = product.quantity
         holder.binding.apply {
             tvNameCart.text = product.title
-            val formattedPrice =
-                NumberFormat.getCurrencyInstance(Locale("in", "ID"))
-            formattedPrice.maximumFractionDigits = 0
-            val formatRupiah = formattedPrice.format(product.price)
-            tvPriceCart.text = formatRupiah
+            tvPriceCart.text = formatPrice(product.price)
             Glide.with(holder.itemView.context)
                 .load(product.image[0])
                 .into(ivCart)
@@ -49,7 +44,7 @@ class CartAdapter(private val listProduct: List<Product>,private val listener: C
                 quantity++
                 tvQuantity.text = quantity.toString()
                 val totalPrice = product.price * quantity
-                val formatPlus = formattedPrice.format(totalPrice)
+                val formatPlus = formatPrice(totalPrice)
                 tvPriceCart.text = formatPlus
                 product.quantity = quantity
                 listener.onPlus(listProduct)
@@ -60,7 +55,7 @@ class CartAdapter(private val listProduct: List<Product>,private val listener: C
                     quantity--
                     tvQuantity.text = quantity.toString()
                     val totalPrice = product.price * quantity
-                    val formatMin = formattedPrice.format(totalPrice)
+                    val formatMin = formatPrice(totalPrice)
                     tvPriceCart.text = formatMin
                     product.quantity = quantity
                 }

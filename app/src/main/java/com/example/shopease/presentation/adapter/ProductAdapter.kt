@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.shopease.databinding.ItemProductBinding
 import com.example.shopease.domain.model.Product
-import java.text.NumberFormat
-import java.util.Locale
+import com.example.shopease.utils.ShopHelper.formatPrice
 
 class ProductAdapter(private val listProduct: List<Product>, private val listener: ItemListener) :
     RecyclerView.Adapter<ProductAdapter.MyViewHolder>() {
@@ -25,11 +24,7 @@ class ProductAdapter(private val listProduct: List<Product>, private val listene
                     .load(data.image[0])
                 .into(ivProduct)
             tvNameProduct.text = data.title
-            val formattedPrice =
-                NumberFormat.getCurrencyInstance(Locale("in", "ID"))
-            formattedPrice.maximumFractionDigits = 0
-            val formatRupiah = formattedPrice.format(data.price)
-            tvPrice.text = formatRupiah
+            tvPrice.text = formatPrice(data.price)
             rateProduct.rating = data.rating
             tvRate.text = data.rating.toString()
             root.setOnClickListener {

@@ -16,10 +16,9 @@ import com.example.shopease.domain.model.ProductState
 import com.example.shopease.presentation.checkout.CheckOutActivity
 import com.example.shopease.presentation.adapter.CartAdapter
 import com.example.shopease.presentation.adapter.CartListener
+import com.example.shopease.utils.ShopHelper.formatPrice
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.text.NumberFormat
-import java.util.Locale
 
 @AndroidEntryPoint
 class CartActivity : AppCompatActivity(),CartListener {
@@ -55,10 +54,7 @@ class CartActivity : AppCompatActivity(),CartListener {
                             binding.rvCart.isVisible = true
                             showData(value.data)
                             val totalPrice = value.data.sumOf { it.price * (it.quantity) }
-                            val formattedPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
-                            formattedPrice.maximumFractionDigits = 0
-                            val formatRupiah = formattedPrice.format(totalPrice)
-                            binding.tvPrice.text = formatRupiah
+                            binding.tvPrice.text = formatPrice(totalPrice)
                             binding.btnCheckout.setOnClickListener {
                                 val intent = Intent(this@CartActivity, CheckOutActivity::class.java)
                                 intent.putParcelableArrayListExtra(CheckOutActivity.EXTRA_PRODUCT, ArrayList(value.data))
@@ -96,20 +92,14 @@ class CartActivity : AppCompatActivity(),CartListener {
     }
 
     override fun onPlus(product: List<Product>) {
-            val formattedPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
-            formattedPrice.maximumFractionDigits = 0
             val totalPrice = product.sumOf { it.price * (it.quantity) }
-            val formatRupiah = formattedPrice.format(totalPrice)
-            binding.tvPrice.text = formatRupiah
+            binding.tvPrice.text = formatPrice(totalPrice)
 
     }
 
     override fun onMinus(product: List<Product>) {
-            val formattedPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
-            formattedPrice.maximumFractionDigits = 0
             val totalPrice = product.sumOf { it.price * (it.quantity) }
-            val formatRupiah = formattedPrice.format(totalPrice)
-            binding.tvPrice.text = formatRupiah
+            binding.tvPrice.text = formatPrice(totalPrice)
 
     }
 }

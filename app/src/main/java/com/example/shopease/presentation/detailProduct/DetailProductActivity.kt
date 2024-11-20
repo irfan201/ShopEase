@@ -3,7 +3,6 @@ package com.example.shopease.presentation.detailProduct
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -20,11 +19,10 @@ import com.example.shopease.domain.model.ProductDetailState
 import com.example.shopease.presentation.checkout.CheckOutActivity
 import com.example.shopease.presentation.checkout.CheckOutActivity.Companion.EXTRA_PRODUCT
 import com.example.shopease.presentation.adapter.ImageSliderAdapter
+import com.example.shopease.utils.ShopHelper.formatPrice
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.text.NumberFormat
-import java.util.Locale
 
 @AndroidEntryPoint
 class DetailProductActivity : AppCompatActivity() {
@@ -68,7 +66,6 @@ class DetailProductActivity : AppCompatActivity() {
                     is ProductDetailState.Success -> {
                         loadingDialog.dismiss()
                         val dataProduct = value.data
-                        Log.d("dataProduct", "dataProduct: ${dataProduct.isFavorite}")
                         val isFavorite = viewModel.isFavorite(
                             dataProduct.id,
                             viewModel.getCurrentUser()?.uid ?: ""
@@ -180,11 +177,7 @@ class DetailProductActivity : AppCompatActivity() {
             var price = 0
             fun updatePrice() {
                 price = dataProduct.price * quantity
-                val formattedPrice =
-                    NumberFormat.getCurrencyInstance(Locale("in", "ID"))
-                formattedPrice.maximumFractionDigits = 0
-                val formatRupiah = formattedPrice.format(price)
-                tvPriceProduct.text = formatRupiah
+                tvPriceProduct.text = formatPrice(price)
             }
             updatePrice()
             ivMin.setOnClickListener {
@@ -211,7 +204,6 @@ class DetailProductActivity : AppCompatActivity() {
                     rating = dataProduct.rating,
                     totalPrice = price
                 )
-                Log.d("product", "kenapa $price")
                 val intent = Intent(this@DetailProductActivity, CheckOutActivity::class.java)
                 intent.putExtra(EXTRA_PRODUCT, product)
                 startActivity(intent)
@@ -224,11 +216,7 @@ class DetailProductActivity : AppCompatActivity() {
     private fun initData(dataProduct: Product) {
         binding.apply {
             tvDetailName.text = dataProduct.title
-            val formattedPrice =
-                NumberFormat.getCurrencyInstance(Locale("in", "ID"))
-            formattedPrice.maximumFractionDigits = 0
-            val formatRupiah = formattedPrice.format(dataProduct.price)
-            tvPriceDetail.text = formatRupiah
+            tvPriceDetail.text = formatPrice(dataProduct.price)
             tvDescriptionProduct.text = dataProduct.description
             rateProduct.rating = dataProduct.rating
             tvRate.text = dataProduct.rating.toString()

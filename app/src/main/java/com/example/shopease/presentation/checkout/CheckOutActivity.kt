@@ -16,11 +16,9 @@ import com.example.shopease.domain.model.OrderState
 import com.example.shopease.domain.model.Product
 import com.example.shopease.presentation.adapter.CheckOutAdapter
 import com.example.shopease.presentation.payOrder.PayActivity
+import com.example.shopease.utils.ShopHelper.formatPrice
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.text.NumberFormat
-import java.util.Locale
-import kotlin.math.log
 
 @AndroidEntryPoint
 class CheckOutActivity : AppCompatActivity() {
@@ -54,17 +52,11 @@ class CheckOutActivity : AppCompatActivity() {
         if (product != null) {
             Log.d("product", product.toString())
             showProduct(listOf(product))
-            val formattedPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
-            formattedPrice.maximumFractionDigits = 0
-            val formatRupiah = formattedPrice.format(product.totalPrice)
-            binding.tvPrice.text = formatRupiah
+            binding.tvPrice.text = product.totalPrice?.let { formatPrice(it) }
         } else if (listProduct != null) {
             showProduct(listProduct)
-            val formattedPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
-            formattedPrice.maximumFractionDigits = 0
             val totalPrice = listProduct.sumOf { (it?.price ?: 1) * (it.quantity) }
-            val formatRupiah = formattedPrice.format(totalPrice)
-            binding.tvPrice.text = formatRupiah
+            binding.tvPrice.text = formatPrice(totalPrice)
         }
 
 

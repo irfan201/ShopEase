@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.shopease.databinding.ItemCheckoutBinding
 import com.example.shopease.domain.model.Product
-import java.text.NumberFormat
-import java.util.Locale
+import com.example.shopease.utils.ShopHelper.formatPrice
 
 class CheckOutAdapter(val listProduct: List<Product?>) : RecyclerView.Adapter<CheckOutAdapter.MyViewHolder>() {
     class MyViewHolder(val binding: ItemCheckoutBinding) : RecyclerView.ViewHolder(binding.root)
@@ -27,9 +26,7 @@ class CheckOutAdapter(val listProduct: List<Product?>) : RecyclerView.Adapter<Ch
                 .load(product?.image?.get(0))
                 .into(ivCheckout)
             tvNameCheckout.text = product?.title
-            val formattedPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
-            formattedPrice.maximumFractionDigits = 0
-            val formatRupiah = formattedPrice.format(product?.price)
+            val formatRupiah = product?.price?.let { formatPrice(it) }
             tvPriceCheckout.text = formatRupiah
             tvCategoryCheckout.text = product?.category
             val productQuantity = product?.quantity ?: 1
