@@ -31,6 +31,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/iv_back" />
 
+    <ImageView
+        android:id="@+id/iv_share"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="button share"
+        android:src="@drawable/baseline_share_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <ScrollView
         android:id="@+id/sv_content"
@@ -51,20 +62,16 @@
                 android:layout_marginTop="32dp"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tl_image_indicator"
+            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                android:id="@+id/dotsIndicator"
                 android:layout_width="wrap_content"
-                android:layout_height="8dp"
-                android:layout_gravity="center"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                app:dotsColor="@color/icon_gray"
+                app:selectedDotColor="@color/primary_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/vp_detail_product_images"
-                app:tabBackground="@drawable/tab_indicator"
-                app:tabGravity="center"
-                app:tabIndicatorHeight="0dp"
-                app:tabIndicatorColor="@color/primary_color"
-                app:tabIndicatorGravity="center"/>
+                app:layout_constraintTop_toBottomOf="@id/vp_detail_product_images" />
 
 
             <TextView
@@ -74,13 +81,13 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
                 android:fontFamily="@font/roboto"
-                tools:text="Shirt"
                 android:textColor="@color/text_primary"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@id/iv_favorite"
                 app:layout_constraintStart_toStartOf="@id/vp_detail_product_images"
-                app:layout_constraintTop_toBottomOf="@id/tl_image_indicator" />
+                app:layout_constraintTop_toBottomOf="@id/dotsIndicator"
+                tools:text="Shirt" />
 
 
             <ImageView
@@ -99,11 +106,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/roboto"
-                tools:text="Rp2.000.000"
                 android:textColor="@color/text_price_regular"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@id/tv_detail_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_name" />
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_name"
+                tools:text="Rp2.000.000" />
 
             <RatingBar
                 android:id="@+id/rate_product"
@@ -177,11 +184,11 @@
                 android:id="@+id/btn_cart"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/add_to_cart"
-                app:backgroundTint="@null"
-                android:textStyle="bold"
-                android:textColor="@color/primary_color"
                 android:background="@drawable/bg_button_cart"
+                android:text="@string/add_to_cart"
+                android:textColor="@color/primary_color"
+                android:textStyle="bold"
+                app:backgroundTint="@null"
                 app:layout_constraintEnd_toStartOf="@id/btn_checkout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -191,8 +198,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="@string/checkout"
                 android:background="@drawable/bg_button_checkout"
+                android:text="@string/checkout"
                 app:backgroundTint="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/btn_cart"

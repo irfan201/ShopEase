@@ -1,9 +1,17 @@
 package com.example.shopease.domain.model
 
 data class OrderHistory(
-    val orId: Int,
+    val orId: String,
     val totalPrice: Int,
-    val nameOrder: String,
-    val quantity: Int,
+    val orderDetail: List<OrderDetail>,
+    val dateOrder : String,
     val statusPayment: String,
-)
+){
+    data class OrderDetail(
+        val id: Int,
+        val name: String,
+        val price: Int,
+        val quantity: Int,
+        val imageUrl: String
+    )
+}

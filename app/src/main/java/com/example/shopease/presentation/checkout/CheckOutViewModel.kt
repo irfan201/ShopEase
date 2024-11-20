@@ -3,9 +3,9 @@ package com.example.shopease.presentation.checkout
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopease.data.model.OrderRequest
-import com.example.shopease.domain.model.Order
 import com.example.shopease.domain.model.OrderState
 import com.example.shopease.domain.usecase.ProductUseCase
+import com.example.shopease.domain.usecase.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CheckOutViewModel @Inject constructor(private val productUseCase: ProductUseCase) :
+class CheckOutViewModel @Inject constructor(private val productUseCase: ProductUseCase,private val userUseCase: UserUseCase) :
     ViewModel() {
     private val _orderState = MutableStateFlow<OrderState>(OrderState.Loading)
     val orderState: StateFlow<OrderState> get() = _orderState
@@ -29,4 +29,6 @@ class CheckOutViewModel @Inject constructor(private val productUseCase: ProductU
             }
         }
     }
+
+    fun getUser() = userUseCase.getCurrentUser()
 }

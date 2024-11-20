@@ -21,9 +21,7 @@ import com.example.shopease.presentation.checkout.CheckOutActivity
 import com.example.shopease.presentation.checkout.CheckOutActivity.Companion.EXTRA_PRODUCT
 import com.example.shopease.presentation.adapter.ImageSliderAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.Locale
@@ -44,7 +42,7 @@ class DetailProductActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailProductBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        loadingDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
         binding.ivBack.setOnClickListener {
             finish()
@@ -94,6 +92,17 @@ class DetailProductActivity : AppCompatActivity() {
                                 "Product added to cart",
                                 Toast.LENGTH_SHORT
                             ).show()
+                        }
+                        binding.ivShare.setOnClickListener {
+                            val data = listOf(dataProduct.image[0], dataProduct.title, dataProduct.price)
+                            val product = data.joinToString { "$it\n" }
+                            val sendIntent: Intent = Intent().apply {
+                                action = Intent.ACTION_SEND
+                                putExtra(Intent.EXTRA_TEXT, product)
+                                type = "text/plain"
+                            }
+                            val shareIntent = Intent.createChooser(sendIntent, null)
+                            startActivity(shareIntent)
                         }
                     }
 
@@ -226,10 +235,8 @@ class DetailProductActivity : AppCompatActivity() {
             val imageAdapter = ImageSliderAdapter(dataProduct.image)
             vpDetailProductImages.adapter = imageAdapter
 
-            TabLayoutMediator(
-                binding.tlImageIndicator,
-                binding.vpDetailProductImages
-            ) { _, _ -> }.attach()
+            val dotsIndicator = binding.dotsIndicator
+            dotsIndicator.setViewPager2(vpDetailProductImages)
         }
     }
 

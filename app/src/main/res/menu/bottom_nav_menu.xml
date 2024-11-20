@@ -6,10 +6,6 @@
         android:id="@+id/btn_home"
         android:icon="@drawable/icon_home"/>
 
-    <item
-        android:title="@string/category"
-        android:id="@+id/btn_category"
-        android:icon="@drawable/icon_category"/>
 
     <item
         android:title="@string/favorite"
@@ -26,11 +22,6 @@
         android:title="@string/profile"
         android:id="@+id/btn_profile"
         android:icon="@drawable/icon_profile"/>
-
-
-<!--    <item-->
-<!--        android:title=""-->
-<!--        android:enabled="false"/>-->
 
 
 </menu>

@@ -1,50 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="180dp"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="160dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
     app:cardCornerRadius="12dp"
-    android:layout_marginTop="12dp"
-    android:layout_marginStart="12dp"
-    android:layout_marginEnd="12dp"
-    android:layout_height="280dp">
-    
+    app:cardElevation="4dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="12dp">
-        
+
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
             android:id="@+id/iv_product"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
             android:scaleType="fitCenter"
-            android:src="@drawable/example_product"/>
+            android:src="@drawable/example_product" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_name_product"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
             android:fontFamily="@font/roboto"
+            android:maxLines="1"
             android:text="Product Name"
             android:textColor="@color/text_primary"
-            android:textSize="18sp"
-            android:id="@+id/tv_name_product"
-            android:layout_marginTop="12dp"
-            android:textStyle="bold"/>
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:text="$ 35"
-            android:textColor="@color/text_price_regular"
-            android:textSize="16sp"
-            android:layout_marginTop="12dp"/>
-
-    z    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/roboto"
+            android:text="Rp 35.000"
+            android:textColor="@color/text_price_regular"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <RatingBar
@@ -54,10 +59,7 @@
                 android:layout_height="wrap_content"
                 android:numStars="5"
                 android:progressTint="#FFEB3B"
-                android:layout_marginTop="8dp"
-                android:layout_gravity="center_vertical"
-                android:rating="4.5"
-                android:stepSize="0.1"/>
+                android:stepSize="0.1" />
 
             <TextView
                 android:id="@+id/tv_rate"
@@ -66,11 +68,8 @@
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/roboto"
                 android:text="4.5"
-                android:layout_marginTop="8dp"
                 android:textColor="@color/text_primary"
-                android:textSize="16sp"
-                android:layout_gravity="center_vertical"/>
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

@@ -19,7 +19,7 @@ class HomeViewModel @Inject constructor(private val productUseCase: ProductUseCa
         getProducts()
     }
 
-     fun getProducts() {
+    fun getProducts() {
         viewModelScope.launch {
             try {
                 val products = productUseCase.getProducts()
@@ -40,5 +40,16 @@ class HomeViewModel @Inject constructor(private val productUseCase: ProductUseCa
             }
         }
 
+    }
+
+     fun getProductsbyCategory(category: String) {
+        viewModelScope.launch {
+            try {
+                val products = productUseCase.getProductsByCategory(category)
+                _productState.value = ProductState.Success(products)
+            } catch (e: Exception) {
+                _productState.value = ProductState.Error(e.message ?: "Unknown error")
+            }
+        }
     }
 }

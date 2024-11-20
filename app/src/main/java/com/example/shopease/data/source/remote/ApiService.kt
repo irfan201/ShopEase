@@ -1,5 +1,6 @@
 package com.example.shopease.data.source.remote
 
+import com.example.shopease.data.model.OrderHistoryDetailDto
 import com.example.shopease.data.model.OrderDto
 import com.example.shopease.data.model.OrderHistoryDto
 import com.example.shopease.data.model.OrderRequest
@@ -35,6 +36,13 @@ interface ApiService {
     @GET("orders")
     suspend fun getOrderHistory(
         @Header("x-user-id") idUser: Int = 1,
+        @Query("search") email: String?
     ): OrderHistoryDto
+
+    @GET("order/{id}")
+    suspend fun getOrderHistoryDetail(
+        @Header("x-user-id") idUser: Int = 1,
+        @Path("id") id: String
+    ): OrderHistoryDetailDto
 
 }

@@ -3,10 +3,10 @@ package com.example.shopease.presentation.cart
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopease.data.model.ProductCartEntity
@@ -16,7 +16,6 @@ import com.example.shopease.domain.model.ProductState
 import com.example.shopease.presentation.checkout.CheckOutActivity
 import com.example.shopease.presentation.adapter.CartAdapter
 import com.example.shopease.presentation.adapter.CartListener
-import com.example.shopease.presentation.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
@@ -42,20 +41,31 @@ class CartActivity : AppCompatActivity(),CartListener {
                     }
 
                     ProductState.Loading -> {
-
                     }
                     is ProductState.Success -> {
-                        showData(value.data)
-                        val totalPrice = value.data.sumOf { it.price * (it.quantity ?: 1) }
-                        val formattedPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
-                        formattedPrice.maximumFractionDigits = 0
-                        val formatRupiah = formattedPrice.format(totalPrice)
-                        binding.tvPrice.text = formatRupiah
-                        binding.btnCheckout.setOnClickListener {
-                            val intent = Intent(this@CartActivity, CheckOutActivity::class.java)
-                            intent.putParcelableArrayListExtra(CheckOutActivity.EXTRA_PRODUCT, ArrayList(value.data))
-                            startActivity(intent)
+                        if (value.data.isEmpty()){
+                            binding.cvButton.isVisible = false
+                            binding.ivCartEmpty.isVisible = true
+                            binding.tvEmpty.isVisible = true
+                            binding.rvCart.isVisible = false
+                        } else{
+                            binding.cvButton.isVisible = true
+                            binding.ivCartEmpty.isVisible = false
+                            binding.tvEmpty.isVisible = false
+                            binding.rvCart.isVisible = true
+                            showData(value.data)
+                            val totalPrice = value.data.sumOf { it.price * (it.quantity) }
+                            val formattedPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
+                            formattedPrice.maximumFractionDigits = 0
+                            val formatRupiah = formattedPrice.format(totalPrice)
+                            binding.tvPrice.text = formatRupiah
+                            binding.btnCheckout.setOnClickListener {
+                                val intent = Intent(this@CartActivity, CheckOutActivity::class.java)
+                                intent.putParcelableArrayListExtra(CheckOutActivity.EXTRA_PRODUCT, ArrayList(value.data))
+                                startActivity(intent)
+                            }
                         }
+
                     }
                 }
             }
@@ -88,7 +98,7 @@ class CartActivity : AppCompatActivity(),CartListener {
     override fun onPlus(product: List<Product>) {
             val formattedPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
             formattedPrice.maximumFractionDigits = 0
-            val totalPrice = product.sumOf { it.price * (it.quantity ?: 1) }
+            val totalPrice = product.sumOf { it.price * (it.quantity) }
             val formatRupiah = formattedPrice.format(totalPrice)
             binding.tvPrice.text = formatRupiah
 
@@ -97,7 +107,7 @@ class CartActivity : AppCompatActivity(),CartListener {
     override fun onMinus(product: List<Product>) {
             val formattedPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
             formattedPrice.maximumFractionDigits = 0
-            val totalPrice = product.sumOf { it.price * (it.quantity ?: 1) }
+            val totalPrice = product.sumOf { it.price * (it.quantity) }
             val formatRupiah = formattedPrice.format(totalPrice)
             binding.tvPrice.text = formatRupiah
 

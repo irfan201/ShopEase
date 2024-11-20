@@ -1,7 +1,7 @@
 package com.example.shopease.presentation.orderHistory
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +14,12 @@ import com.example.shopease.databinding.FragmentOrderBinding
 import com.example.shopease.domain.model.OrderHistory
 import com.example.shopease.domain.model.OrderHistoryState
 import com.example.shopease.presentation.adapter.OrderAdapter
+import com.example.shopease.presentation.adapter.OrderListener
+import com.example.shopease.presentation.orderHistoryDetail.OrderDetailActivity
+import com.example.shopease.presentation.orderHistoryDetail.OrderDetailActivity.Companion.ORDER_ID
 import kotlinx.coroutines.launch
 
-class OrderFragment : Fragment() {
+class OrderFragment : Fragment(), OrderListener {
     private var _binding : FragmentOrderBinding? = null
     private val binding get() = _binding
     private val viewModel: OrderViewModel by activityViewModels()
@@ -74,7 +77,7 @@ class OrderFragment : Fragment() {
     }
 
     private fun showData(listOrder: List<OrderHistory>){
-        val adapter = OrderAdapter(listOrder)
+        val adapter = OrderAdapter(listOrder,this)
         binding?.apply {
             rvOrder.layoutManager = LinearLayoutManager(requireContext())
             rvOrder.adapter = adapter
@@ -86,6 +89,11 @@ class OrderFragment : Fragment() {
         _binding = null
     }
 
+    override fun onClick(id: String) {
+        val intent = Intent(requireActivity(), OrderDetailActivity::class.java)
+        intent.putExtra(ORDER_ID, id)
+        startActivity(intent)
+    }
 
 
 }

@@ -2,21 +2,16 @@ package com.example.shopease.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
-import android.widget.SearchView.OnCloseListener
 import android.widget.SearchView.OnQueryTextListener
-import android.widget.TextView
-import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.shopease.R
 import com.example.shopease.databinding.FragmentHomeBinding
 import com.example.shopease.domain.model.Product
 import com.example.shopease.domain.model.ProductState
@@ -29,7 +24,7 @@ import com.example.shopease.presentation.adapter.ProductAdapter
 import kotlinx.coroutines.launch
 
 
-class HomeFragment : Fragment(),ItemListener {
+class HomeFragment : Fragment(), ItemListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding
 
@@ -45,58 +40,62 @@ class HomeFragment : Fragment(),ItemListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.cvCart?.setOnClickListener {
-            startActivity(Intent(requireActivity(), CartActivity::class.java))
-        }
 
-        binding?.svProduct?.setOnQueryTextListener(object :OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.getProductsBySearch(query.toString())
-                return false
+        binding?.apply {
+            cvCart.setOnClickListener {
+                startActivity(Intent(requireActivity(), CartActivity::class.java))
             }
-            override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText.toString().isEmpty()){
-                    viewModel.getProducts()
+
+            svProduct.setOnQueryTextListener(object : OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    viewModel.getProductsBySearch(query.toString())
+                    return false
                 }
-                return false
-            }
-        })
-        val clearButton = binding?.svProduct?.findViewById<SearchView>(androidx.appcompat.R.id.search_close_btn)
-        clearButton?.setOnClickListener {
-            binding?.svProduct?.setQuery("", false)
-            viewModel.getProducts()
-        }
-        binding?.svProduct?.setOnCloseListener(object :OnCloseListener{
-            override fun onClose(): Boolean {
-                viewModel.getProducts()
-                return false
-            }
-        })
-        lifecycleScope.launch {
-            viewModel.productState.collect { value ->
-                when (value) {
-                    is ProductState.Error -> {
-                        binding?.shimmerLayout?.stopShimmer()
-                        binding?.shimmerLayout?.visibility = View.GONE
-                        binding?.rvProduct?.visibility = View.VISIBLE
-                        Toast.makeText(requireContext(), value.message, Toast.LENGTH_SHORT).show()
-                    }
 
-                    ProductState.Loading -> {
-                        binding?.shimmerLayout?.startShimmer()
-                        binding?.shimmerLayout?.visibility = View.VISIBLE
-                        binding?.rvProduct?.visibility = View.GONE
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText.toString().isEmpty()) {
+                        viewModel.getProducts()
+                    }
+                    return false
+                }
+            })
 
-                    }
-                    is ProductState.Success -> {
-                        binding?.shimmerLayout?.stopShimmer()
-                        binding?.shimmerLayout?.visibility = View.GONE
-                        binding?.rvProduct?.visibility = View.VISIBLE
-                        val data = value.data
-                        showData(data)
-                    }
+            cgCategory.setOnCheckedChangeListener { group, checkedId ->
+                when (checkedId) {
+                    R.id.ch_sport -> viewModel.getProductsbyCategory("SPORT")
+                    R.id.ch_casual -> viewModel.getProductsbyCategory("CASUAL")
+                    R.id.ch_formal -> viewModel.getProductsbyCategory("FORMAL")
                 }
             }
+            lifecycleScope.launch {
+                viewModel.productState.collect { value ->
+                    when (value) {
+                        is ProductState.Error -> {
+                            shimmerLayout.stopShimmer()
+                            shimmerLayout.visibility = View.GONE
+                            rvProduct.visibility = View.VISIBLE
+                            Toast.makeText(requireContext(), value.message, Toast.LENGTH_SHORT)
+                                .show()
+                        }
+
+                        ProductState.Loading -> {
+                            shimmerLayout.startShimmer()
+                            shimmerLayout.visibility = View.VISIBLE
+                            rvProduct.visibility = View.GONE
+
+                        }
+
+                        is ProductState.Success -> {
+                            shimmerLayout.stopShimmer()
+                            shimmerLayout.visibility = View.GONE
+                            rvProduct.visibility = View.VISIBLE
+                            val data = value.data
+                            showData(data)
+                        }
+                    }
+                }
+            }
+
         }
 
     }
@@ -108,7 +107,7 @@ class HomeFragment : Fragment(),ItemListener {
     }
 
     private fun showData(listProduct: List<Product>) {
-        val adapter = ProductAdapter(listProduct,this)
+        val adapter = ProductAdapter(listProduct, this)
         binding?.apply {
             rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
             rvProduct.adapter = adapter

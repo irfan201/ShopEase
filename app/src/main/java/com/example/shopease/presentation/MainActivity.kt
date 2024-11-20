@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.shopease.R
 import com.example.shopease.databinding.ActivityMainBinding
-import com.example.shopease.presentation.category.CategoryFragment
 import com.example.shopease.presentation.favorite.FavoriteFragment
 import com.example.shopease.presentation.home.HomeFragment
 import com.example.shopease.presentation.orderHistory.OrderFragment
@@ -29,10 +28,6 @@ class MainActivity : AppCompatActivity() {
 
                     R.id.btn_home -> {
                         replaceFragment(HomeFragment())
-                        true
-                    }
-                    R.id.btn_category -> {
-                        replaceFragment(CategoryFragment())
                         true
                     }
 

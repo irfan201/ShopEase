@@ -6,6 +6,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     alias(libs.plugins.google.gms.google.services)
     id("kotlin-parcelize")
+    alias(libs.plugins.google.firebase.crashlytics)
 }
 
 android {
@@ -45,6 +46,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.dotsindicator)
     implementation(libs.androidx.credentials)
     implementation (libs.play.services.auth)
     implementation(libs.glide)
@@ -53,6 +55,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.firebase.auth)
     implementation(libs.googleid)
+    implementation(libs.firebase.crashlytics)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.credentials.play.services.auth)

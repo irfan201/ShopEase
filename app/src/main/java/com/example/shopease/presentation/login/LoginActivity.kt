@@ -17,7 +17,6 @@ import com.example.shopease.databinding.ActivityLoginBinding
 import com.example.shopease.domain.model.UserState
 import com.example.shopease.presentation.MainActivity
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -65,6 +64,7 @@ class LoginActivity : AppCompatActivity() {
                     "Google Sign-In failed: ${e.message}",
                     Toast.LENGTH_SHORT
                 ).show()
+                Log.e("LoginActivity", "Google Sign-In failed", e)
             }
         }
     }
@@ -88,7 +88,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     is UserState.Error -> {
-                        Toast.makeText(this@LoginActivity, value.message, Toast.LENGTH_SHORT).show()
+                        Log.e("LoginActivity", value.message)
                     }
 
                     is UserState.Success -> {

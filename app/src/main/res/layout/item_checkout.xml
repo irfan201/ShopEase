@@ -17,7 +17,7 @@
             android:id="@+id/iv_checkout"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             android:src="@drawable/example_product"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

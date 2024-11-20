@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialResponse
 import com.example.shopease.data.model.OrderDto
+import com.example.shopease.data.model.OrderHistoryDetailDto
 import com.example.shopease.data.model.OrderHistoryDto
 import com.example.shopease.data.model.OrderRequest
 import com.example.shopease.data.model.ProductCategoryDto
@@ -25,7 +26,8 @@ interface RemoteDataSource {
     suspend fun getProductsByCategory(category: String): ProductCategoryDto
     suspend fun getProductbBySearch(search: String): ProductDto
     suspend fun orderProduct(orderRequest: OrderRequest): OrderDto
-    suspend fun getOrderHistory(): OrderHistoryDto
+    suspend fun getOrderHistory(email: String): OrderHistoryDto
+    suspend fun getOrderHistoryDetail(id: String): OrderHistoryDetailDto
 }
 
 class RemoteDataSourceImpl @Inject constructor(
@@ -64,9 +66,13 @@ class RemoteDataSourceImpl @Inject constructor(
         return apiService.orderProduct(orderRequest = orderRequest)
     }
 
-    override suspend fun getOrderHistory(): OrderHistoryDto {
-        return apiService.getOrderHistory()
+    override suspend fun getOrderHistory(email: String): OrderHistoryDto {
+        return apiService.getOrderHistory(email = email)
 
+    }
+
+    override suspend fun getOrderHistoryDetail(id: String): OrderHistoryDetailDto {
+        return apiService.getOrderHistoryDetail(id = id)
     }
 
     private fun getGoogleIdTokenCredential(credentialResponse: GetCredentialResponse): String? {
@@ -75,7 +81,6 @@ class RemoteDataSourceImpl @Inject constructor(
                 if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
                     val googleIdTokenCredential =
                         GoogleIdTokenCredential.createFrom(credential.data)
-                    //return idToken
                     googleIdTokenCredential.idToken
                 } else {
                     null

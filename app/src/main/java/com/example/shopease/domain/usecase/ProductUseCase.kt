@@ -61,8 +61,12 @@ class ProductUseCase @Inject constructor(private val productRepository: ProductR
         return productRepository.isFavorite(productId, userId)
     }
 
-    suspend fun getOrderHistory(): List<OrderHistory> {
-        return productRepository.getOrderHistory()
+    suspend fun getOrderHistory(email: String): List<OrderHistory> {
+        return productRepository.getOrderHistory(email)
+    }
+
+    suspend fun getOrderHistoryDetail(id: String): List<OrderHistory.OrderDetail> {
+        return productRepository.getOrderHistoryDetail(id)
     }
 
 

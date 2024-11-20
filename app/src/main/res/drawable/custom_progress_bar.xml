@@ -1,0 +1,30 @@
+<!-- res/drawable/custom_progress.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="ring">
+            <size
+                android:width="48dp"
+                android:height="48dp"
+                android:thickness="8dp" />
+            <solid android:color="@android:color/darker_gray" />
+        </shape>
+    </item>
+
+    <item>
+        <rotate
+            android:repeatCount="infinite">
+            <shape android:shape="ring">
+                <size
+                    android:width="48dp"
+                    android:height="48dp"
+                    android:thickness="8dp" />
+                <gradient
+                    android:endColor="@android:color/transparent"
+                    android:startColor="@color/primary_color"
+                    android:type="sweep"
+                    android:useLevel="true" />
+            </shape>
+        </rotate>
+    </item>
+</layer-list>

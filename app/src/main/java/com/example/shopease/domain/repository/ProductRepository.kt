@@ -1,6 +1,7 @@
 package com.example.shopease.domain.repository
 
 import com.example.shopease.data.model.OrderDto
+import com.example.shopease.data.model.OrderHistoryDetailDto
 import com.example.shopease.data.model.OrderHistoryDto
 import com.example.shopease.data.model.OrderRequest
 import com.example.shopease.data.model.ProductCartEntity
@@ -28,7 +29,8 @@ interface ProductRepository {
     suspend fun getProductsbySearch(search: String): List<Product>
     suspend fun orderProduct(orderRequest: OrderRequest): Order
     suspend fun isFavorite(productId: Int, userId: String): Boolean
-    suspend fun getOrderHistory(): List<OrderHistory>
+    suspend fun getOrderHistory(email:String): List<OrderHistory>
+    suspend fun getOrderHistoryDetail(id: String): List<OrderHistory.OrderDetail>
 }
 
 class ProductRepositoryImpl @Inject constructor(
@@ -86,11 +88,15 @@ class ProductRepositoryImpl @Inject constructor(
     }
 
     override suspend fun isFavorite(productId: Int, userId: String): Boolean {
-        return localDataSource.isFavorite(productId,userId)
+        return localDataSource.isFavorite(productId, userId)
     }
 
-    override suspend fun getOrderHistory(): List<OrderHistory> {
-        return remoteDataSource.getOrderHistory().data.map { it.toOrderHistory() }
+    override suspend fun getOrderHistory(email: String): List<OrderHistory> {
+        return remoteDataSource.getOrderHistory(email).data.map { it.toOrderHistory() }
+    }
+
+    override suspend fun getOrderHistoryDetail(id: String): List<OrderHistory.OrderDetail> {
+        return remoteDataSource.getOrderHistoryDetail(id).data.details.first().odProducts.map { it.toOrderDetail() }
     }
 
 
@@ -171,13 +177,30 @@ class ProductRepositoryImpl @Inject constructor(
 
     private fun OrderHistoryDto.Data.toOrderHistory(): OrderHistory {
         return OrderHistory(
-            orId = orId,
+            orId = orPlatformId,
             totalPrice = orTotalPrice,
-            nameOrder = details.first().odProducts.first().name,
-            quantity = details.first().odProducts.first().quantity,
-            statusPayment = orStatus
+            orderDetail = details.map { details ->
+                OrderHistory.OrderDetail(
+                    id = details.odProducts.first().id,
+                    name = details.odProducts.first().name,
+                    price = details.odProducts.first().price,
+                    quantity = details.odProducts.first().quantity,
+                    imageUrl = details.odProducts.first().imageUrl.pdImageUrl
+                )
+            },
+            statusPayment = orStatus,
+            dateOrder = orCreatedOn
         )
+    }
 
+    private fun OrderHistoryDetailDto.Data.Detail.OdProduct.toOrderDetail(): OrderHistory.OrderDetail {
+        return OrderHistory.OrderDetail(
+            id = id,
+            name = name,
+            price = price,
+            quantity = quantity,
+            imageUrl = imageUrl.pdImageUrl
+        )
     }
 
 }

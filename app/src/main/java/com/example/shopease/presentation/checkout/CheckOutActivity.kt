@@ -9,16 +9,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.shopease.R
 import com.example.shopease.data.model.OrderRequest
 import com.example.shopease.databinding.ActivityCheckOutBinding
 import com.example.shopease.databinding.LoadingDialogBinding
 import com.example.shopease.domain.model.OrderState
 import com.example.shopease.domain.model.Product
-import com.example.shopease.presentation.SuccessActivity
 import com.example.shopease.presentation.adapter.CheckOutAdapter
 import com.example.shopease.presentation.payOrder.PayActivity
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
@@ -65,7 +62,7 @@ class CheckOutActivity : AppCompatActivity() {
             showProduct(listProduct)
             val formattedPrice = NumberFormat.getCurrencyInstance(Locale("in", "ID"))
             formattedPrice.maximumFractionDigits = 0
-            val totalPrice = listProduct.sumOf { (it?.price ?: 1) * (it.quantity ?: 1) }
+            val totalPrice = listProduct.sumOf { (it?.price ?: 1) * (it.quantity) }
             val formatRupiah = formattedPrice.format(totalPrice)
             binding.tvPrice.text = formatRupiah
         }
@@ -80,13 +77,13 @@ class CheckOutActivity : AppCompatActivity() {
                     viewModel.orderProduct(
                         OrderRequest(
                             amount = product.totalPrice ?: 0,
-                            email = "test@gmail.com",
+                            email = viewModel.getUser()?.email ?: "test@gmail.com",
                             items = listOf(
                                 OrderRequest.Item(
                                     id = product.id,
                                     name = product.title,
                                     price = product.price,
-                                    quantity = product.quantity ?: 0
+                                    quantity = product.quantity
                                 )
                             )
                         )
@@ -101,10 +98,10 @@ class CheckOutActivity : AppCompatActivity() {
                         )
                     }
                     Log.d("products", products.toString())
-                    Log.d("listProduct", listProduct.sumOf { (it?.price ?: 1) * (it.quantity ?: 1) }.toString())
+                    Log.d("listProduct", listProduct.sumOf { (it?.price ?: 1) * (it.quantity) }.toString())
                     viewModel.orderProduct(OrderRequest(
-                        amount = listProduct.sumOf { (it?.price ?: 1) * (it.quantity ?: 1) },
-                        email = "test@gmail.com",
+                        amount = listProduct.sumOf { (it?.price ?: 1) * (it.quantity) },
+                        email = viewModel.getUser()?.email ?: "test@gmail.com",
                         items = products
                     ))
                 }
