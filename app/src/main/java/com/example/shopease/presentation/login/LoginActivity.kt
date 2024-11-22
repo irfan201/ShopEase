@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        if (viewModel.getLogin() != null) {
+        if (viewModel.getLogin()) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
@@ -73,8 +73,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.signInWithGoogle(response)
         observeLoginState()
             lifecycleScope.launch {
-                viewModel.putToken(response.credential.toString())
-
+                viewModel.saveLogin(true)
             }
 
     }

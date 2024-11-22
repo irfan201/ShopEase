@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context=".presentation.orderHistory.OrderFragment">
 
 
@@ -16,6 +15,8 @@
         android:text="My Order"
         android:textColor="@color/text_primary"
         android:textSize="28sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,6 +25,7 @@
         android:id="@+id/rv_order"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/tv_order"
         tools:listitem="@layout/item_order" />
@@ -32,6 +34,7 @@
         android:id="@+id/shimmer_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/tv_order">
 

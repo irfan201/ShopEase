@@ -24,5 +24,6 @@ interface ProductRepository {
     suspend fun isFavorite(productId: Int, userId: String): Boolean
     suspend fun getOrderHistory(email:String): List<OrderHistory>
     suspend fun getOrderHistoryDetail(id: String): List<OrderHistory.OrderDetail>
+
 }
 

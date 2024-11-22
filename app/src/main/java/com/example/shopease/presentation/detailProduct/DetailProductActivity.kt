@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.example.shopease.R
 import com.example.shopease.data.model.ProductCartEntity
 import com.example.shopease.data.model.ProductFavoriteEntity
 import com.example.shopease.databinding.ActivityDetailProductBinding
@@ -91,7 +92,7 @@ class DetailProductActivity : AppCompatActivity() {
                             ).show()
                         }
                         binding.ivShare.setOnClickListener {
-                            val data = listOf(dataProduct.image[0], dataProduct.title, dataProduct.price)
+                            val data = listOf(dataProduct.image[0], dataProduct.title, formatPrice(dataProduct.price))
                             val product = data.joinToString { "$it\n" }
                             val sendIntent: Intent = Intent().apply {
                                 action = Intent.ACTION_SEND
@@ -167,6 +168,7 @@ class DetailProductActivity : AppCompatActivity() {
         val dialogBinding = DialogCheckoutBinding.inflate(layoutInflater)
         val dialog = BottomSheetDialog(this)
         dialog.setContentView(dialogBinding.root)
+        dialogBinding.clCheckout.setBackgroundColor(getColor(R.color.white))
         dialog.show()
         dialogBinding.apply {
             Glide.with(this@DetailProductActivity)

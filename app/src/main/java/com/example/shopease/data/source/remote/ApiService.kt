@@ -23,7 +23,9 @@ interface ApiService {
     suspend fun getProductById(@Path("id") id: Int): ProductDetailDto
 
     @GET("products/category/{category}")
-    suspend fun getProductsByCategory(@Path("category") category: String): ProductCategoryDto
+    suspend fun getProductsByCategory(
+        @Path("category") category: String
+    ): ProductCategoryDto
 
 
     @POST("order/snap")
@@ -36,7 +38,8 @@ interface ApiService {
     @GET("orders")
     suspend fun getOrderHistory(
         @Header("x-user-id") idUser: Int = 1,
-        @Query("search") email: String?
+        @Query("search") email: String?,
+        @Query("orderPaymentStatus") orderPaymentStatus: String = "settlement",
     ): OrderHistoryDto
 
     @GET("order/{id}")

@@ -30,11 +30,11 @@ class LoginViewModel @Inject constructor(private val userUseCase: UserUseCase):V
         }
     }
 
-    suspend fun putToken(token: String) {
-        userUseCase.putToken(token)
+    suspend fun saveLogin(isLogin: Boolean) {
+        userUseCase.saveLogin(isLogin)
     }
 
-    fun getLogin():String?{
-        return userUseCase.getToken()
+    fun getLogin():Boolean{
+        return userUseCase.getLogin()
     }
 }

@@ -8,17 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.shopease.databinding.FragmentProfileBinding
 import com.example.shopease.presentation.login.LoginActivity
-import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding
 
-    private val viewModel : ProfileViewModel by activityViewModels()
+    private val viewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,14 +47,15 @@ class ProfileFragment : Fragment() {
         val dialog = AlertDialog.Builder(requireContext())
         dialog.setTitle("Logout")
         dialog.setMessage("Are you sure want to logout?")
-        dialog.setPositiveButton("Yes"){_,_ ->
-            lifecycleScope.launch {
-                viewModel.logout()
-            }
+        dialog.setPositiveButton("Yes") { _, _ ->
+
+            viewModel.logout()
             startActivity(Intent(requireActivity(), LoginActivity::class.java))
             requireActivity().finish()
+
+
         }
-        dialog.setNegativeButton("No"){_,_ ->
+        dialog.setNegativeButton("No") { _, _ ->
         }
         dialog.setCancelable(false)
         dialog.show()
@@ -66,7 +65,6 @@ class ProfileFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
 
 }

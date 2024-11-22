@@ -3,8 +3,6 @@ package com.example.shopease.domain.usecase
 import androidx.credentials.GetCredentialResponse
 import com.example.shopease.domain.model.User
 import com.example.shopease.domain.repository.UserRepository
-import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UserUseCase @Inject constructor(private val userRepository: UserRepository) {
@@ -17,12 +15,12 @@ class UserUseCase @Inject constructor(private val userRepository: UserRepository
         return userRepository.getCurrentUser()
     }
 
-    suspend fun putToken(token: String) {
-        userRepository.putToken(token)
+    suspend fun saveLogin(isLogin: Boolean){
+        userRepository.saveLogin(isLogin)
     }
 
-    fun getToken(): String? {
-        return userRepository.getToken()
+    fun getLogin(): Boolean {
+        return userRepository.getLogin()
     }
 
     suspend fun logout() {
@@ -45,6 +43,9 @@ class UserUseCase @Inject constructor(private val userRepository: UserRepository
         return userRepository.getStart()
     }
 
+    fun clearCategory(){
+        userRepository.clearCategory()
+    }
 
 
 

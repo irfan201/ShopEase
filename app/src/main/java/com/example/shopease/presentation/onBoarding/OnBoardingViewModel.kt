@@ -12,7 +12,7 @@ class OnBoardingViewModel @Inject constructor(private val userUseCase: UserUseCa
         userUseCase.saveStart(start)
     }
 
-    fun getLogin():String?{
-        return userUseCase.getToken()
+    fun getLogin():Boolean{
+        return userUseCase.getLogin()
     }
 }

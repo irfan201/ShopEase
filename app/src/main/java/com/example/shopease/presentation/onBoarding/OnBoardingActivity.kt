@@ -5,10 +5,7 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import com.example.shopease.R
 import com.example.shopease.databinding.ActivityOnboardingBinding
 import com.example.shopease.presentation.MainActivity
 import com.example.shopease.presentation.login.LoginActivity
@@ -27,7 +24,7 @@ class OnBoardingActivity : AppCompatActivity() {
         binding.btnStart.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.saveStart(true)
-                if (viewModel.getLogin() != null){
+                if (viewModel.getLogin()){
                     startActivity(Intent(this@OnBoardingActivity, MainActivity::class.java))
                     finish()
                 } else{

@@ -10,53 +10,42 @@
         android:id="@+id/tv_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/roboto"
         android:text="@string/shop_ease"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
         android:textColor="@color/text_primary"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/mc_search"
+    <com.google.android.material.search.SearchBar
+        android:id="@+id/sv_product"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:elevation="4dp"
-        app:cardCornerRadius="8dp"
-        app:cardUseCompatPadding="true"
+        android:background="@android:color/white"
+        android:focusable="false"
+        android:hint="Search Product"
+        android:iconifiedByDefault="false"
         app:layout_constraintEnd_toStartOf="@id/cv_cart"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_home">
-
-        <SearchView
-            android:id="@+id/sv_product"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:iconifiedByDefault="false"
-            android:queryHint="Search Product" />
-
-    </com.google.android.material.card.MaterialCardView>
-
+        app:layout_constraintTop_toBottomOf="@id/tv_home" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_cart"
         android:layout_width="50dp"
-        android:layout_marginEnd="16dp"
         android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
-        app:layout_constraintBottom_toBottomOf="@id/mc_search"
+        app:layout_constraintBottom_toBottomOf="@id/sv_product"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/mc_search"
-        app:layout_constraintTop_toTopOf="@id/mc_search">
+        app:layout_constraintStart_toEndOf="@id/sv_product"
+        app:layout_constraintTop_toTopOf="@id/sv_product">
 
         <ImageView
             android:id="@+id/iv_cart"
@@ -72,47 +61,59 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="@id/mc_search"
-        app:layout_constraintTop_toBottomOf="@id/mc_search"
+        app:layout_constraintStart_toStartOf="@id/sv_product"
+        app:layout_constraintTop_toBottomOf="@id/sv_product"
         app:singleSelection="true">
+
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/ch_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:clickable="true"
+            android:text="All"
+            android:textColor="@drawable/text_selector_color"
+            app:chipBackgroundColor="@drawable/selector_category" />
+
 
         <com.google.android.material.chip.Chip
             android:id="@+id/ch_sport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@drawable/selector_category"
-            android:textColor="@drawable/text_selector_color"
             android:checkable="true"
             android:clickable="true"
-            android:text="Sport" />
+            android:text="Sport"
+            android:textColor="@drawable/text_selector_color"
+            app:chipBackgroundColor="@drawable/selector_category" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/ch_casual"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@drawable/selector_category"
-            android:textColor="@drawable/text_selector_color"
             android:checkable="true"
             android:clickable="true"
-            android:text="Casual" />
+            android:text="Casual"
+            android:textColor="@drawable/text_selector_color"
+            app:chipBackgroundColor="@drawable/selector_category" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/ch_formal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@drawable/selector_category"
-            android:textColor="@drawable/text_selector_color"
             android:checkable="true"
             android:clickable="true"
-            android:text="Formal" />
+            android:text="Formal"
+            android:textColor="@drawable/text_selector_color"
+            app:chipBackgroundColor="@drawable/selector_category" />
     </com.google.android.material.chip.ChipGroup>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_product"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
         android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cg_category"
         tools:listitem="@layout/item_product" />
@@ -121,8 +122,8 @@
         android:id="@+id/shimmer_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/cg_category">
 
         <LinearLayout

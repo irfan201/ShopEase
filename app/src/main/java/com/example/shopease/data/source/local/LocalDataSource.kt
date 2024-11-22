@@ -5,11 +5,10 @@ import com.example.shopease.data.model.ProductFavoriteEntity
 import com.example.shopease.data.source.local.preference.UserDataStore
 import com.example.shopease.data.source.local.room.CartDao
 import com.example.shopease.data.source.local.room.FavoriteDao
-import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {
-    suspend fun putToken(token: String)
-    fun getToken(): String?
+    suspend fun saveLogin(isLogin: Boolean)
+    fun getLogin(): Boolean
     suspend fun logout()
     suspend fun insertFavorite(favorite: ProductFavoriteEntity)
     suspend fun getFavorites(userId: String): List<ProductFavoriteEntity>
@@ -22,6 +21,7 @@ interface LocalDataSource {
     fun getCategory(): String?
     suspend fun saveStart(start: Boolean)
     fun getStart(): Boolean
+    fun clearCategory()
 
 }
 
@@ -30,12 +30,12 @@ class LocalDataSourceImpl(
     private val favoriteDao: FavoriteDao,
     private val cartDao: CartDao
 ) : LocalDataSource {
-    override suspend fun putToken(token: String) {
-        userDataStore.putToken(token)
+    override suspend fun saveLogin(isLogin: Boolean) {
+        userDataStore.saveLogin(isLogin)
     }
 
-    override fun getToken(): String? {
-        return userDataStore.getToken()
+    override fun getLogin(): Boolean {
+        return userDataStore.getLogin()
     }
 
     override suspend fun logout() {
@@ -86,5 +86,9 @@ class LocalDataSourceImpl(
     override fun getStart(): Boolean {
         return userDataStore.getStart()
 
+    }
+
+    override fun clearCategory() {
+        userDataStore.clearCategory()
     }
 }

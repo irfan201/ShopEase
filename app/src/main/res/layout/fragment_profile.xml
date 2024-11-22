@@ -59,6 +59,7 @@
         android:id="@+id/cv_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
         android:layout_marginTop="32dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"

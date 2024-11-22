@@ -19,12 +19,12 @@ class UserRepositoryImpl @Inject constructor(
         return remoteDataSource.getCurrentUser()?.toUser()
     }
 
-    override suspend fun putToken(token: String) {
-        localDataSource.putToken(token)
+    override suspend fun saveLogin(isLogin: Boolean) {
+        localDataSource.saveLogin(isLogin)
     }
 
-    override fun getToken(): String? {
-        return localDataSource.getToken()
+    override fun getLogin(): Boolean {
+        return localDataSource.getLogin()
     }
 
     override suspend fun logout() {
@@ -45,6 +45,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun getStart(): Boolean {
         return localDataSource.getStart()
+    }
+
+    override fun clearCategory() {
+        localDataSource.clearCategory()
     }
 
 }

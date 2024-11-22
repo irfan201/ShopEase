@@ -25,7 +25,7 @@ class OrderAdapter(private val listOrder: List<OrderHistory>, private val listen
         val order = listOrder[position]
         holder.binding.apply {
             tvNameOrder.text = order.orId
-            tvStatusOrder.text = order.statusPayment
+            tvStatusOrder.text = order.statusPayment.uppercase()
             tvPriceOrder.text = formatPrice(order.totalPrice)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val parsedDate = java.time.ZonedDateTime.parse(order.dateOrder)

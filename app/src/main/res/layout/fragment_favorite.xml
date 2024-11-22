@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context=".presentation.favorite.FavoriteFragment">
 
 
@@ -16,6 +15,8 @@
         android:text="@string/my_favorites"
         android:textColor="@color/text_primary"
         android:textSize="28sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,6 +27,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_favorite"
         android:layout_marginTop="16dp"
         tools:listitem="@layout/item_favorite"
+        android:layout_marginHorizontal="16dp"
         android:id="@+id/rv_favorite"/>
 
     <ImageView
