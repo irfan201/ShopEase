@@ -10,6 +10,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            keyAlias = "key0"
+            storePassword = "shopease"
+            keyPassword = "shopease"
+            storeFile = file("E:\\Irfan\\myKey\\keystores.jks")
+        }
+    }
     namespace = "com.example.shopease"
     compileSdk = 34
 
@@ -25,12 +33,14 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
-//            isShrinkResources = true
+            isMinifyEnabled = true
+            isShrinkResources = true
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {

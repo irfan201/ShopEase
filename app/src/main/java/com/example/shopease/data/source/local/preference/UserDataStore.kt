@@ -54,10 +54,10 @@ class UserDataStore @Inject constructor(private val dataStore: DataStore<Prefere
         }
     }
 
-     fun getLogin(): Boolean {
-         return runBlocking(Dispatchers.IO) {
-             dataStore.data.first()[LOGIN] ?: false
-         }
+    fun getLogin(): Boolean {
+        return runBlocking(Dispatchers.IO) {
+            dataStore.data.first()[LOGIN] ?: false
+        }
     }
 
     suspend fun logout(){

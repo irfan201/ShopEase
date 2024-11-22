@@ -11,39 +11,23 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-# Keep Retrofit & OkHttp classes
 -keep class retrofit2.** { *; }
--keep class okhttp3.** { *; }
--keepclassmembers class okhttp3.** { *; }
+-keep class com.squareup.okhttp3.** { *; }
+-keep interface retrofit2.** { *; }
 -dontwarn retrofit2.**
 -dontwarn okhttp3.**
-
-# Keep Gson annotations
--keep class com.google.gson.annotations.SerializedName { *; }
--keepattributes Annotation
-
-# Keep Model classes for serialization/deserialization
--keepclassmembers class * {
-    @com.google.gson.annotations.SerializedName <fields>;
-}
+-dontwarn okio.**
+-keep class com.example.shopease.data.model.** { *; }
+-keep class com.google.gson.** { *; }
+-dontwarn com.google.gson.**
+-keep class androidx.credentials.** { *; }
+-keep class com.google.android.libraries.identity.googleid.** { *; }
 
 
-# Keep Hilt classes
--keep class * implements dagger.hilt.InstallIn { *; }
+
+-keep class * implements dagger.hilt.InstallIn
+-if class * extends android.app.Application
 -keep @dagger.hilt.android.HiltAndroidApp class <1> { *; }
--keep class dagger.hilt.internal.** { *; }
--keepattributes RuntimeVisibleAnnotations
--dontwarn dagger.**
-
-
-# --- Keep Android resource classes ---
--keep class **.R
--keep class **.R$* { *; }
-
-# --- Keep ViewBinding and DataBinding ---
--keep class **.databinding.*Binding { *; }
--keep class **.databinding.* { *; }
--keep class **.BR { *; }
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
 #-keepattributes SourceFile,LineNumberTable

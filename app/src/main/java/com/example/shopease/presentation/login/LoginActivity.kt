@@ -72,9 +72,9 @@ class LoginActivity : AppCompatActivity() {
     private fun handleSignIn(response: GetCredentialResponse) {
         viewModel.signInWithGoogle(response)
         observeLoginState()
-            lifecycleScope.launch {
-                viewModel.saveLogin(true)
-            }
+        lifecycleScope.launch {
+            viewModel.saveLogin(true)
+        }
 
     }
 
