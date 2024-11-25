@@ -1,5 +1,6 @@
 package com.example.shopease.data.source.remote
 
+import com.example.shopease.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,7 +14,7 @@ class NetworkConfig {
             val chain = it.request()
             val logging = HttpLoggingInterceptor()
             logging.level = HttpLoggingInterceptor.Level.BODY
-            val token = "4h2a>UB%_DO1)QwaP|%[xHgp\$:IRp4"
+            val token = BuildConfig.API_KEY
             val requestHeaders = chain.newBuilder()
                 .addHeader("accept", "/")
                 .addHeader("x-secret-app", token)

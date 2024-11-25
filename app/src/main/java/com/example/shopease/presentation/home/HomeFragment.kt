@@ -25,24 +25,38 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), ItemListener {
     private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding
+    private val binding get() = _binding!!
 
     private val viewModel: HomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding?.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.apply {
+        binding.swipeRefresh.setOnRefreshListener {
+            if (viewModel.getCategory() != null) {
+                viewModel.getCategory()?.let { it1 ->
+                    viewModel.getProductsbyCategory(
+                        it1
+                    )
+                }
+            } else {
+                viewModel.getProducts()
+            }
+        }
+
+        initData()
+
+        binding.apply {
             val category = viewModel.getCategory()
-            when(category){
+            when (category) {
                 "SPORT" -> cgCategory.check(R.id.ch_sport)
                 "CASUAL" -> cgCategory.check(R.id.ch_casual)
                 "FORMAL" -> cgCategory.check(R.id.ch_formal)
@@ -59,55 +73,89 @@ class HomeFragment : Fragment(), ItemListener {
 
             cgCategory.setOnCheckedStateChangeListener { group, checkedIds ->
                 when {
-                    checkedIds.contains(R.id.ch_all)-> {
+                    checkedIds.contains(R.id.ch_all) -> {
                         viewModel.getProducts()
                         viewModel.clearCategory()
                     }
+
                     checkedIds.contains(R.id.ch_sport) -> {
                         viewModel.getProductsbyCategory("SPORT")
                         viewModel.saveCategory("SPORT")
                     }
+
                     checkedIds.contains(R.id.ch_casual) -> {
                         viewModel.getProductsbyCategory("CASUAL")
                         viewModel.saveCategory("CASUAL")
                     }
+
                     checkedIds.contains(R.id.ch_formal) -> {
                         viewModel.getProductsbyCategory("FORMAL")
                         viewModel.saveCategory("FORMAL")
                     }
                 }
             }
-            lifecycleScope.launch {
-                viewModel.productState.collect { value ->
-                    when (value) {
-                        is ProductState.Error -> {
-                            shimmerLayout.stopShimmer()
-                            shimmerLayout.visibility = View.GONE
-                            rvProduct.visibility = View.VISIBLE
-                            Toast.makeText(requireContext(), value.message, Toast.LENGTH_SHORT)
-                                .show()
-                        }
 
-                        ProductState.Loading -> {
-                            shimmerLayout.startShimmer()
-                            shimmerLayout.visibility = View.VISIBLE
-                            rvProduct.visibility = View.GONE
-
-                        }
-
-                        is ProductState.Success -> {
-                            shimmerLayout.stopShimmer()
-                            shimmerLayout.visibility = View.GONE
-                            rvProduct.visibility = View.VISIBLE
-                            val data = value.data
-                            showData(data)
-                        }
-                    }
-                }
-            }
 
         }
 
+    }
+
+    private fun initData() {
+        lifecycleScope.launch {
+            viewModel.productState.collect { value ->
+                when (value) {
+                    is ProductState.Error -> {
+                        binding.swipeRefresh.isRefreshing = false
+                        binding.shimmerLayout.stopShimmer()
+                        binding.shimmerLayout.visibility = View.GONE
+                        binding.rvProduct.visibility = View.GONE
+                        binding.ivNoInternet.visibility = View.VISIBLE
+                        binding.tvNoInternet.visibility = View.VISIBLE
+                        binding.cvRefresh.visibility = View.VISIBLE
+                        binding.cgCategory.visibility = View.GONE
+                        binding.cvRefresh.setOnClickListener {
+                            if (viewModel.getCategory() != null) {
+                                viewModel.getCategory()?.let { it1 ->
+                                    viewModel.getProductsbyCategory(
+                                        it1
+                                    )
+                                }
+                            } else {
+                                viewModel.getProducts()
+                            }
+
+                        }
+                        Toast.makeText(requireContext(), value.message, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+
+                    ProductState.Loading -> {
+                        binding.shimmerLayout.startShimmer()
+                        binding.shimmerLayout.visibility = View.VISIBLE
+                        binding.rvProduct.visibility = View.GONE
+                        binding.ivNoInternet.visibility = View.GONE
+                        binding.tvNoInternet.visibility = View.GONE
+                        binding.cvRefresh.visibility = View.GONE
+                        binding.cgCategory.visibility = View.VISIBLE
+                        binding.swipeRefresh.isRefreshing = false
+
+                    }
+
+                    is ProductState.Success -> {
+                        binding.shimmerLayout.stopShimmer()
+                        binding.shimmerLayout.visibility = View.GONE
+                        binding.rvProduct.visibility = View.VISIBLE
+                        binding.ivNoInternet.visibility = View.GONE
+                        binding.tvNoInternet.visibility = View.GONE
+                        binding.cvRefresh.visibility = View.GONE
+                        binding.cgCategory.visibility = View.VISIBLE
+                        val data = value.data
+                        showData(data)
+                        binding.swipeRefresh.isRefreshing = false
+                    }
+                }
+            }
+        }
     }
 
 
@@ -118,7 +166,7 @@ class HomeFragment : Fragment(), ItemListener {
 
     private fun showData(listProduct: List<Product>) {
         val adapter = ProductAdapter(listProduct, this)
-        binding?.apply {
+        binding.apply {
             rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
             rvProduct.adapter = adapter
 

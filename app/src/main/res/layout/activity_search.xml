@@ -105,5 +105,30 @@
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
+    <ImageView
+        android:id="@+id/iv_search_activity"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/search_empty"/>
+
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/iv_search_activity"
+        android:fontFamily="@font/roboto"
+        android:text="Product not found"
+        android:visibility="gone"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/iv_search_activity"
+        app:layout_constraintEnd_toEndOf="@id/iv_search_activity"
+        android:textColor="@color/text_primary"
+        android:textSize="20sp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,39 +24,54 @@ class OrderDetailActivity : AppCompatActivity() {
         binding = ActivityOrderDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val orderId = intent.getStringExtra(ORDER_ID)
-        binding.ivBack.setOnClickListener {
-            finish()
-        }
         if (orderId != null) {
             viewModel.getOrderHistoryDetail(orderId)
         }
-        lifecycleScope.launch {
-            viewModel.orderDetailState.collect { value ->
-                when (value) {
-                    is OrderDetailHistoryState.Error -> {
-                        binding.shimmerLayout.stopShimmer()
-                        binding.shimmerLayout.visibility = View.GONE
-                        binding.rvDetailOrder.visibility = View.GONE
-                        Toast.makeText(this@OrderDetailActivity, value.message, Toast.LENGTH_SHORT)
-                            .show()
-                    }
+        binding.apply {
+            ivBack.setOnClickListener {
+                finish()
+            }
 
-                    OrderDetailHistoryState.Loading -> {
-                        binding.shimmerLayout.startShimmer()
-                        binding.shimmerLayout.visibility = View.VISIBLE
-                        binding.rvDetailOrder.visibility = View.GONE
+            lifecycleScope.launch {
+                viewModel.orderDetailState.collect { value ->
+                    when (value) {
+                        is OrderDetailHistoryState.Error -> {
+                            shimmerLayout.stopShimmer()
+                            shimmerLayout.visibility = View.GONE
+                            rvDetailOrder.visibility = View.GONE
+                            ivNoInternet.visibility = View.VISIBLE
+                            tvNoInternet.visibility = View.VISIBLE
+                            cvRefresh.visibility = View.VISIBLE
+                            cvRefresh.setOnClickListener {
+                                if (orderId != null) {
+                                    viewModel.getOrderHistoryDetail(orderId)
+                                }
+                            }
+                            Toast.makeText(this@OrderDetailActivity, value.message, Toast.LENGTH_SHORT)
+                                .show()
+                        }
 
-                    }
+                        OrderDetailHistoryState.Loading -> {
+                            shimmerLayout.startShimmer()
+                            shimmerLayout.visibility = View.VISIBLE
+                            rvDetailOrder.visibility = View.GONE
+                            ivNoInternet.visibility = View.GONE
+                            tvNoInternet.visibility = View.GONE
+                            cvRefresh.visibility = View.GONE
 
-                    is OrderDetailHistoryState.Success -> {
-                        binding.shimmerLayout.stopShimmer()
-                        binding.shimmerLayout.visibility = View.GONE
-                        binding.rvDetailOrder.visibility = View.VISIBLE
-                        showData(value.data)
+                        }
+
+                        is OrderDetailHistoryState.Success -> {
+                            shimmerLayout.stopShimmer()
+                            shimmerLayout.visibility = View.GONE
+                            rvDetailOrder.visibility = View.VISIBLE
+                            showData(value.data)
+                        }
                     }
                 }
             }
         }
+
 
     }
 

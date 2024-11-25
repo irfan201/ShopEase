@@ -14,15 +14,10 @@
 -keep class retrofit2.** { *; }
 -keep class com.squareup.okhttp3.** { *; }
 -keep interface retrofit2.** { *; }
--dontwarn retrofit2.**
--dontwarn okhttp3.**
--dontwarn okio.**
+
 -keep class com.example.shopease.data.model.** { *; }
 -keep class com.google.gson.** { *; }
 -dontwarn com.google.gson.**
--keep class androidx.credentials.** { *; }
--keep class com.google.android.libraries.identity.googleid.** { *; }
-
 
 
 -keep class * implements dagger.hilt.InstallIn

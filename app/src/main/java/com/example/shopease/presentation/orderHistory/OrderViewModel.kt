@@ -24,9 +24,9 @@ class OrderViewModel @Inject constructor(
         getOrderHistory(getCurrenUser()?.email ?: "test@gmail.com")
     }
 
-    private fun getCurrenUser()  = userUseCase.getCurrentUser()
+     fun getCurrenUser()  = userUseCase.getCurrentUser()
 
-    private fun getOrderHistory(email: String) {
+    fun getOrderHistory(email: String) {
         viewModelScope.launch {
             try {
                 val orderHistory = productUseCase.getOrderHistory(email)

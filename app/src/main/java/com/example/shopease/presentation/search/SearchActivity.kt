@@ -67,15 +67,26 @@ class SearchActivity : AppCompatActivity(), ItemListener {
                             shimmerLayout.startShimmer()
                             shimmerLayout.visibility = View.VISIBLE
                             rvSearch.visibility = View.GONE
+                            ivSearchActivity.visibility = View.GONE
+                            tvEmpty.visibility = View.GONE
 
                         }
 
                         is ProductState.Success -> {
-                            shimmerLayout.stopShimmer()
-                            shimmerLayout.visibility = View.GONE
-                            rvSearch.visibility = View.VISIBLE
                             val data = value.data
-                            showData(data)
+                            shimmerLayout.stopShimmer()
+                            if (data.isEmpty()){
+                                shimmerLayout.visibility = View.GONE
+                                rvSearch.visibility = View.GONE
+                                ivSearchActivity.visibility = View.VISIBLE
+                                tvEmpty.visibility = View.VISIBLE
+                            }else{
+                                shimmerLayout.visibility = View.GONE
+                                rvSearch.visibility = View.VISIBLE
+                                ivSearchActivity.visibility = View.GONE
+                                tvEmpty.visibility = View.GONE
+                                showData(data)
+                            }
                         }
                     }
                 }

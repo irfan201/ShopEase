@@ -89,8 +89,6 @@ class CheckOutActivity : AppCompatActivity() {
                             quantity = it?.quantity ?: 0
                         )
                     }
-                    Log.d("products", products.toString())
-                    Log.d("listProduct", listProduct.sumOf { (it?.price ?: 1) * (it.quantity) }.toString())
                     viewModel.orderProduct(OrderRequest(
                         amount = listProduct.sumOf { (it?.price ?: 1) * (it.quantity) },
                         email = viewModel.getUser()?.email ?: "test@gmail.com",

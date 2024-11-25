@@ -34,46 +34,67 @@ class OrderFragment : Fragment(), OrderListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.swipeRefresh?.setOnRefreshListener {
+            viewModel.getOrderHistory(viewModel.getCurrenUser()?.email ?: "test@gmail.com")
+        }
         initData()
     }
 
     private fun initData() {
-        lifecycleScope.launch {
-            viewModel.orderHistoryState.collect{value ->
-                when(value){
-                    is OrderHistoryState.Error -> {
-                        binding?.shimmerLayout?.stopShimmer()
-                        binding?.shimmerLayout?.visibility = View.GONE
-                        binding?.rvOrder?.visibility = View.VISIBLE
-                        Toast.makeText(requireContext(),value.message,Toast.LENGTH_SHORT).show()
-                    }
-                    OrderHistoryState.Loading -> {
-                        binding?.shimmerLayout?.startShimmer()
-                        binding?.shimmerLayout?.visibility = View.VISIBLE
-                        binding?.rvOrder?.visibility = View.GONE
-                    }
-                    is OrderHistoryState.Success -> {
-                        binding?.shimmerLayout?.stopShimmer()
-                        binding?.shimmerLayout?.visibility = View.GONE
-                        if (value.data.isEmpty()){
-                            binding?.apply {
-                                ivOrderEmpty.visibility = View.VISIBLE
-                                tvEmpty.visibility = View.VISIBLE
-                                rvOrder.visibility = View.GONE
+        binding?.apply {
+            lifecycleScope.launch {
+                viewModel.orderHistoryState.collect{value ->
+                    when(value){
+                        is OrderHistoryState.Error -> {
+                           shimmerLayout.stopShimmer()
+                            shimmerLayout.visibility = View.GONE
+                            rvOrder.visibility = View.GONE
+                            ivNoInternet.visibility = View.VISIBLE
+                            tvNoInternet.visibility = View.VISIBLE
+                            cvRefresh.visibility = View.VISIBLE
+                            cvRefresh.setOnClickListener {
+                                viewModel.getOrderHistory(viewModel.getCurrenUser()?.email ?: "test@gmail.com")
                             }
-                        } else{
-                            binding?.apply {
-                                ivOrderEmpty.visibility = View.GONE
-                                tvEmpty.visibility = View.GONE
-                                rvOrder.visibility = View.VISIBLE
-                            }
-                            showData(value.data)
+                            Toast.makeText(requireContext(),value.message,Toast.LENGTH_SHORT).show()
                         }
+                        OrderHistoryState.Loading -> {
+                            shimmerLayout.startShimmer()
+                            shimmerLayout.visibility = View.VISIBLE
+                            rvOrder.visibility = View.GONE
+                            ivNoInternet.visibility = View.GONE
+                            tvNoInternet.visibility = View.GONE
+                            cvRefresh.visibility = View.GONE
+                        }
+                        is OrderHistoryState.Success -> {
+                            swipeRefresh.isRefreshing = false
+                            shimmerLayout.stopShimmer()
+                            shimmerLayout.visibility = View.GONE
+                            ivNoInternet.visibility = View.GONE
+                            tvNoInternet.visibility = View.GONE
+                            cvRefresh.visibility = View.GONE
+                            if (value.data.isEmpty()){
+                                apply {
+                                    ivOrderEmpty.visibility = View.VISIBLE
+                                    tvEmpty.visibility = View.VISIBLE
+                                    rvOrder.visibility = View.GONE
 
+                                }
+                            } else{
+                                apply {
+                                    ivOrderEmpty.visibility = View.GONE
+                                    tvEmpty.visibility = View.GONE
+                                    rvOrder.visibility = View.VISIBLE
+
+                                }
+                                showData(value.data)
+                            }
+
+                        }
                     }
                 }
             }
         }
+        
     }
 
     private fun showData(listOrder: List<OrderHistory>){
