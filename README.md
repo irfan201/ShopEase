@@ -37,9 +37,9 @@ ShopEase is an Android-based e-commerce platform designed to provide a fast, sec
 ## Architecture Pattern
 ShopEase is built using the MVVM (Model-View-ViewModel) architectural pattern. This pattern separates the user interface (UI) from the business logic, which offers several benefits:
 
-**Model**:Represents the data layer, including data sources, APIs, and repositories. It handles data manipulation and provides the required data to the ViewModel.
-**View**Refers to the user interface components such as Activity, Fragment, or XML layout files. The View is responsible for displaying data to the user and sending user actions to the ViewModel.
-**ViewModel**: Acts as a mediator between the Model and View. It fetches data from the Model and provides it to the View in a format that can be easily displayed. It also manages UI-related logic and survives configuration changes, such as screen rotations, ensuring data persistence.
+- **Model**:Represents the data layer, including data sources, APIs, and repositories. It handles data manipulation and provides the required data to the ViewModel.
+- **View**Refers to the user interface components such as Activity, Fragment, or XML layout files. The View is responsible for displaying data to the user and sending user actions to the ViewModel.
+- **ViewModel**: Acts as a mediator between the Model and View. It fetches data from the Model and provides it to the View in a format that can be easily displayed. It also manages UI-related logic and survives configuration changes, such as screen rotations, ensuring data persistence.
 By adopting MVVM, ShopEase promotes a clean separation of concerns, making the codebase more maintainable, testable, and scalable.
 
 ![image](https://github.com/user-attachments/assets/1badc8cb-f936-4e78-a473-6cd35b362e83)
@@ -55,10 +55,10 @@ Sebelum menjalankan aplikasi ini, pastikan Anda telah menginstal:
 
 ## Installation
 Follow these steps to run the project on your local machine:
-1. Clone this repository:
+`1`. Clone this repository:
    ```bash
    git clone https://github.com/username/ShopEase.git](https://github.com/irfan201/ShopEase.git
-`2`.Open the project in Android Studio.
-`3`.Sync the project with Gradle files.
-`4`.Run the project on an emulator or a physical device.
+- `2`.Open the project in Android Studio.
+- `3`.Sync the project with Gradle files.
+- `4`.Run the project on an emulator or a physical device.
 
