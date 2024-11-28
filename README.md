@@ -57,7 +57,7 @@ Sebelum menjalankan aplikasi ini, pastikan Anda telah menginstal:
 Follow these steps to run the project on your local machine:
 1. Clone this repository:
    ```bash
-   git clone https://github.com/username/ShopEase.git](https://github.com/irfan201/ShopEase.git
+   git clone https://github.com/username/ShopEase.git
    
 - Open the project in Android Studio.
 - Sync the project with Gradle files.
