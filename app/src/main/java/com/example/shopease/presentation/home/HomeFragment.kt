@@ -50,6 +50,7 @@ class HomeFragment : Fragment(), ItemListener {
             } else {
                 viewModel.getProducts()
             }
+            initData()
         }
 
         initData()

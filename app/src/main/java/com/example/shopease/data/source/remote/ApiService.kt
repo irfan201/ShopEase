@@ -38,7 +38,7 @@ interface ApiService {
     @GET("orders")
     suspend fun getOrderHistory(
         @Header("x-user-id") idUser: Int = 1,
-        @Query("search") email: String?,
+        @Query("search") email: String,
         @Query("orderPaymentStatus") orderPaymentStatus: String = "settlement",
     ): OrderHistoryDto
 

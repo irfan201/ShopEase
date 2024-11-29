@@ -29,7 +29,6 @@ android {
         val properties = Properties()
         properties.load(keystoreFile.inputStream())
 
-        //return empty key in case something goes wrong
         val apiKey = properties.getProperty("API_KEY") ?: ""
 
         buildConfigField(

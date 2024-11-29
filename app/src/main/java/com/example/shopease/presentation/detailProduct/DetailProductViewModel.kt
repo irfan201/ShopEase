@@ -10,10 +10,12 @@ import com.example.shopease.domain.usecase.ProductUseCase
 import com.example.shopease.domain.usecase.UserUseCase
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,8 +53,12 @@ class DetailProductViewModel @Inject constructor(private val productUseCase: Pro
 
 
     fun insertProductCart(product: ProductCartEntity) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             productUseCase.insertProductCart(product)
+            val user = withContext(Dispatchers.Default){
+                userUseCase.getCurrentUser()
+            }
+
         }
 
     }

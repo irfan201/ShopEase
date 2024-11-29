@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 class OrderFragment : Fragment(), OrderListener {
     private var _binding : FragmentOrderBinding? = null
     private val binding get() = _binding
+
     private val viewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -36,6 +37,7 @@ class OrderFragment : Fragment(), OrderListener {
         super.onViewCreated(view, savedInstanceState)
         binding?.swipeRefresh?.setOnRefreshListener {
             viewModel.getOrderHistory(viewModel.getCurrenUser()?.email ?: "test@gmail.com")
+            initData()
         }
         initData()
     }
@@ -104,6 +106,7 @@ class OrderFragment : Fragment(), OrderListener {
             rvOrder.adapter = adapter
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
