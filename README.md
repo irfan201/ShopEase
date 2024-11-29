@@ -1,8 +1,10 @@
 # ShopEase
-![image](https://github.com/user-attachments/assets/0ec19cfd-5d7c-45cd-9097-434fb0846431)
+![image](https://github.com/user-attachments/assets/566504ab-bcf6-42d7-b2b7-68b9f426982c)
+
 ShopEase is an Android-based e-commerce platform designed to provide a fast, secure, and seamless online shopping experience. Developed using Kotlin and XML, the app allows users to browse product catalogs, add items to their cart, and complete transactions using various payment methods. Built with an MVVM architecture, ShopEase offers key features such as product search, wishlist management, and purchase history.
 
 ## Demo
+https://github.com/user-attachments/assets/7ec13ea5-3b46-4d74-9ae9-85f34f17e320
 
 ## Table of Contents
 - [ShopEase](#shopease)
